@@ -59,6 +59,8 @@ if [ -f ~/.config/hypr/hyprland.conf ] && [ ! -e ~/.config/hypr/hyprland.conf.ba
   echo "==> moved legacy hyprland.conf -> hyprland.conf.bak (using hyprland.lua)"
 fi
 mkdir -p ~/Pictures/Screenshots
+mkdir -p ~/Pictures/Wallpapers
+cp -a "$RICE/wallpapers/." ~/Pictures/Wallpapers/
 
 echo "==> installing hyprctl wrapper (kills HYPRLAND_INSTANCE_SIGNATURE error"
 echo "    from any shell; the env var is only set inside Hyprland sessions)"
