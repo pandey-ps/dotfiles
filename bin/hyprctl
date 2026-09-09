@@ -1,0 +1,8 @@
+#!/bin/sh
+WHYPRCTL="/usr/bin/hyprctl"
+for a in "$@"; do
+  case "$a" in
+    -i|--instance) exec "$WHYPRCTL" "$@" ;;
+  esac
+done
+exec "$WHYPRCTL" -i 0 "$@"

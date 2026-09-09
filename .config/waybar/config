@@ -1,0 +1,116 @@
+{
+	"layer": "bottom",
+	"position": "top",
+	"height": 32,
+	"spacing": 0,
+
+	"tooltip": false,
+
+	"margin-top": 12,
+	"margin-left": 12,
+	"margin-right": 12,
+
+	"modules-left": [
+		"custom/spacing",
+		"custom/workspaces", "ext/workspaces"
+	],
+
+	"modules-right": [
+		"custom/volume", "wireplumber",
+		"custom/brightness", "backlight",
+		"custom/battery", "battery",
+		"custom/wifi", "network",
+		"custom/display",
+		"custom/time","clock",
+		"tray",
+		"custom/spacing"
+	],
+
+	"ext/workspaces": {
+		"format": "{icon}",
+		"on-click": "activate",
+		"all-outputs": true,
+		"format-icons": {
+			"1": "first",
+			"2": "second",
+			"3": "third",
+			"4": "fourth",
+			"5": "fifth",
+			"6": "sixth",
+			"7": "seventh",
+			"8": "eigth",
+			"9": "ninth",
+			"10": "tenth"
+		}
+	},
+	"custom/workspaces": {
+		"tooltip": false,
+		"format": "workspaces"
+	},
+	"custom/volume": {
+		"tooltip": false,
+		"format": "volume",
+		"on-click": "~/.config/waybar/scripts/audio-menu.sh"
+	},
+	"custom/brightness": {
+		"tooltip": false,
+		"format": "brightness",
+		"on-scroll-up": "~/.config/waybar/scripts/osd.sh bri-up",
+		"on-scroll-down": "~/.config/waybar/scripts/osd.sh bri-down"
+	},
+	"custom/battery": {
+		"tooltip": false,
+		"format": "battery"
+	},
+	"custom/wifi": {
+		"tooltip": false,
+		"format": "wifi",
+		"on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+	},
+	"custom/display": {
+		"tooltip": false,
+		"format": "display",
+		"on-click": "~/.config/waybar/scripts/display-menu.sh"
+	},
+	"custom/time": {
+		"tooltip": false,
+		"format": "time"
+	},
+	"custom/spacing": {
+		"tooltip": false,
+		"format": " "
+	},
+	"clock": {
+		"format": "{:%H:%M}",
+		"format-alt": "{:%Y-%m-%d}",
+		"tooltip": false
+	},
+	"backlight": {
+		"format": "{percent}%",
+		"tooltip": false,
+		"scroll-step": 5.0
+	},
+	"wireplumber": {
+		"format": "{volume}%",
+		"format-muted": "muted",
+		"on-click": "~/.config/waybar/scripts/audio-menu.sh",
+		"tooltip": false,
+		"scroll-step": 5.0
+	},
+	"battery": {
+		"format": "{capacity}%",
+		"tooltip": false
+	},
+	"network": {
+		"format-wifi": "{essid}",
+		"format-ethernet": "wired",
+		"format-disconnected": "offline",
+		"tooltip": false,
+		"on-click": "~/.config/waybar/scripts/wifi-menu.sh",
+		"interval": 5
+	},
+	"tray": {
+		"icon-size": 16,
+		"spacing": 8
+	}
+}
