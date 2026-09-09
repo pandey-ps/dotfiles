@@ -9,10 +9,10 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-PACMAN_PKGS="hyprland hyprpaper waybar mako kitty fuzzel dolphin grim slurp brightnessctl wireplumber libpulse pavucontrol wdisplays jq libnotify neovim git base-devel wget curl pciutils seatd polkit networkmanager network-manager-applet"
+PACMAN_PKGS="hyprland hyprpaper waybar mako kitty fuzzel dolphin grim slurp brightnessctl wireplumber libpulse wdisplays libnotify neovim git base-devel wget curl pciutils seatd polkit networkmanager"
 AUR_PKGS="ttf-courier-prime python-pywal"
-APT_PKGS="hyprland waybar mako kitty fuzzel dolphin grim slurp brightnessctl pavucontrol wdisplays pulseaudio-utils jq libnotify-bin neovim git build-essential wget curl seatd polkitd network-manager network-manager-gnome"
-DNF_PKGS="hyprland hyprpaper waybar mako kitty fuzzel dolphin grim slurp brightnessctl wireplumber pavucontrol wdisplays pulseaudio-utils jq libnotify neovim git gcc make wget curl seatd polkit NetworkManager NetworkManager-applet"
+APT_PKGS="hyprland waybar mako kitty fuzzel dolphin grim slurp brightnessctl wdisplays pulseaudio-utils libnotify-bin neovim git build-essential wget curl seatd polkitd network-manager"
+DNF_PKGS="hyprland hyprpaper waybar mako kitty fuzzel dolphin grim slurp brightnessctl wireplumber wdisplays pulseaudio-utils libnotify neovim git gcc make wget curl seatd polkit NetworkManager"
 
 PM=""
 if command -v pacman >/dev/null; then PM="pacman"
