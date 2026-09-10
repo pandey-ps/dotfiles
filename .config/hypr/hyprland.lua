@@ -15,7 +15,7 @@ local menu        = "fuzzel"
 
 
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & wl-paste -p --type text --watch cliphist store & hypridle")
+  hl.exec_cmd("hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
 end)
 
 
@@ -167,7 +167,7 @@ hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + ALT + Q", hl.dsp.exit())
-hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png'))
+hl.bind("Print", hl.dsp.exec_cmd('f=~/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png; grim -g "$(slurp)" "$f" && wl-copy --type image/png < "$f"'))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
