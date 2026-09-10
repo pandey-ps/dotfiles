@@ -1,6 +1,6 @@
 #!/bin/sh
 # konsole compatibility shim: this rice ships kitty, not konsole.
-# Anything asking for KDE's default terminal (dolphin "open with",
+# Anything asking for KDE's default terminal (file manager "open with",
 # Terminal=true launchers, xdg helpers) lands in kitty instead.
 # Only the common flags are translated; konsole-only chrome is dropped.
 #

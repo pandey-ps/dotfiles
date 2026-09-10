@@ -9,7 +9,7 @@ hl.monitor({
 
 
 local terminal    = "kitty"
-local fileManager = "dolphin"
+local fileManager = "nautilus"
 local menu        = "fuzzel"
 
 
@@ -133,6 +133,22 @@ hl.window_rule({
 hl.window_rule({
     name   = "btop-float",
     match  = { title = "^btop$" },
+    float  = true,
+    size   = { 875, 600 },
+    center = true,
+})
+
+hl.window_rule({
+    name   = "imv-float",
+    match  = { class = "^imv$" },
+    float  = true,
+    size   = { 875, 600 },
+    center = true,
+})
+
+hl.window_rule({
+    name   = "mpv-float",
+    match  = { class = "^mpv$" },
     float  = true,
     size   = { 875, 600 },
     center = true,
