@@ -15,7 +15,7 @@ local menu        = "fuzzel"
 
 
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
+  hl.exec_cmd("hyprlock --immediate-render & hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
 end)
 
 

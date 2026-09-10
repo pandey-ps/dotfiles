@@ -16,7 +16,7 @@
 	],
 
 	"modules-right": [
-		"custom/time","clock",
+		"custom/time","custom/clock",
 		"custom/volume", "wireplumber",
 		"custom/battery", "battery",
 		"custom/display",
@@ -87,10 +87,11 @@
 		"tooltip": false,
 		"format": " "
 	},
-	"clock": {
-		"format": "{:%H:%M}",
-		"format-alt": "{:%Y-%m-%d}",
-		"tooltip": false
+	"custom/clock": {
+		"tooltip": false,
+		"format": "{}",
+		"interval": 10,
+		"exec": "date +'%a, %H:%M' | tr 'A-Z' 'a-z'"
 	},
 	"wireplumber": {
 		"format": "{volume}%",

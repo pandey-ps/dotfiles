@@ -41,4 +41,8 @@ for conf in "$HOME/.config/hypr/hyprpaper.conf" "$HOME/dotfiles/.config/hypr/hyp
   [ -f "$conf" ] || continue
   sed -i "s|^[[:space:]]*path = .*|    path = $FILE|" "$conf" 2>/dev/null || true
 done
+for conf in "$HOME/.config/hypr/hyprlock.conf" "$HOME/dotfiles/.config/hypr/hyprlock.conf"; do
+  [ -f "$conf" ] || continue
+  sed -i "s|^[[:space:]]*path = .*|    path = $FILE|" "$conf" 2>/dev/null || true
+done
 notify "$CHOICE"

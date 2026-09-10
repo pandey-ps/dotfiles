@@ -23,7 +23,7 @@ window#waybar {
 	font-weight: 700;
 }
 
-#wireplumber, #battery, #network, #clock, #tray {
+#wireplumber, #battery, #network, #custom-clock, #tray {
 	padding: 4px 10px 0px 0px;
 	margin: 2px 0px;
 
