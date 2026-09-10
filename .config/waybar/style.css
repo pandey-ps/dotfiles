@@ -73,6 +73,18 @@ button:hover {
 	color: #d4c8b2;
 }
 
+#custom-display {
+	border-right: 2px solid rgba(158, 148, 137, 0.13);
+	margin-right: 0px;
+	padding-right: 10px;
+}
+
+#custom-time {
+	border-left: 2px solid rgba(158, 148, 137, 0.13);
+	margin-left: 0px;
+	padding-left: 10px;
+}
+
 .modules-left > widget:first-child > #custom-spacing {
 	border-right: 2px solid rgba(158, 148, 137, 0.13);
 	margin-top: 2px;
