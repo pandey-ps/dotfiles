@@ -59,7 +59,10 @@
 	"battery": {
 		"format": "{capacity}%",
 		"tooltip": false,
-		"on-click": "~/.config/waybar/scripts/power-menu.sh"
+		"on-click": "~/.config/waybar/scripts/power-menu.sh",
+		"events": {
+			"on-discharging-10": "notify-send -t 60000 'connect a charger!'"
+		}
 	},
 	"custom/wifi": {
 		"tooltip": false,
