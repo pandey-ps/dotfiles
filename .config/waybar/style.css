@@ -14,7 +14,7 @@ window#waybar {
 	transition-duration: .5s;
 }
 
-#custom-workspaces, #custom-volume, #custom-brightness, #custom-battery, #custom-wifi, #custom-display, #custom-time {
+#custom-workspaces, #custom-volume, #custom-battery, #custom-wifi, #custom-display, #custom-btop, #custom-time {
 	margin: 2px 10px;
 	padding-top: 5px;
 
@@ -23,7 +23,7 @@ window#waybar {
 	font-weight: 700;
 }
 
-#wireplumber, #backlight, #battery, #network, #clock, #tray {
+#wireplumber, #battery, #network, #clock, #tray {
 	padding: 4px 10px 0px 0px;
 	margin: 2px 0px;
 

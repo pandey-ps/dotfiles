@@ -6,7 +6,7 @@
 
 	"tooltip": false,
 
-	"margin-top": 12,
+	"margin-top": 0,
 	"margin-left": 12,
 	"margin-right": 12,
 
@@ -16,12 +16,11 @@
 	],
 
 	"modules-right": [
-		"custom/volume", "wireplumber",
-		"custom/brightness", "backlight",
-		"custom/battery", "battery",
-		"custom/wifi", "network",
-		"custom/display",
 		"custom/time","clock",
+		"custom/volume", "wireplumber",
+		"custom/battery", "battery",
+		"custom/display",
+		"custom/wifi", "network", "custom/btop",
 		"tray",
 		"custom/spacing"
 	],
@@ -49,18 +48,18 @@
 	},
 	"custom/volume": {
 		"tooltip": false,
-		"format": "volume",
+		"format": "sound",
 		"on-click": "~/.config/waybar/scripts/audio-menu.sh"
-	},
-	"custom/brightness": {
-		"tooltip": false,
-		"format": "brightness",
-		"on-scroll-up": "~/.config/waybar/scripts/osd.sh bri-up",
-		"on-scroll-down": "~/.config/waybar/scripts/osd.sh bri-down"
 	},
 	"custom/battery": {
 		"tooltip": false,
-		"format": "battery"
+		"format": "battery",
+		"on-click": "~/.config/waybar/scripts/power-menu.sh"
+	},
+	"battery": {
+		"format": "{capacity}%",
+		"tooltip": false,
+		"on-click": "~/.config/waybar/scripts/power-menu.sh"
 	},
 	"custom/wifi": {
 		"tooltip": false,
@@ -71,6 +70,11 @@
 		"tooltip": false,
 		"format": "display",
 		"on-click": "~/.config/waybar/scripts/display-menu.sh"
+	},
+	"custom/btop": {
+		"tooltip": false,
+		"format": "btop",
+		"on-click": "kitty --title btop -e btop"
 	},
 	"custom/time": {
 		"tooltip": false,
@@ -85,11 +89,6 @@
 		"format-alt": "{:%Y-%m-%d}",
 		"tooltip": false
 	},
-	"backlight": {
-		"format": "{percent}%",
-		"tooltip": false,
-		"scroll-step": 5.0
-	},
 	"wireplumber": {
 		"format": "{volume}%",
 		"format-muted": "muted",
@@ -97,12 +96,8 @@
 		"tooltip": false,
 		"scroll-step": 5.0
 	},
-	"battery": {
-		"format": "{capacity}%",
-		"tooltip": false
-	},
 	"network": {
-		"format-wifi": "{essid}",
+		"format-wifi": "connected",
 		"format-ethernet": "wired",
 		"format-disconnected": "offline",
 		"tooltip": false,

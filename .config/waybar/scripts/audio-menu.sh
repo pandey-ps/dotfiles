@@ -54,7 +54,7 @@ COUNT=$(printf '%s\n' "$MENU" | wc -l)
 [ "$COUNT" -gt 8 ] && COUNT=8
 [ "$COUNT" -lt 2 ] && COUNT=2
 
-CHOICE=$(printf '%s\n' "$MENU" | fuzzel --dmenu --lines="$COUNT") || exit 0
+CHOICE=$(printf '%s\n' "$MENU" | fuzzel --dmenu --hide-prompt --lines="$COUNT") || exit 0
 [ -z "${CHOICE:-}" ] && exit 0
 [ "${NO_DEVICES:-0}" -eq 1 ] && exit 0
 

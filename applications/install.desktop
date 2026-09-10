@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=install
+Comment=search and install arch/aur packages
+Keywords=install;packages;pacman;aur;
+Exec=sh -c 'exec "$HOME/.config/waybar/scripts/install-menu.sh"'
+Terminal=false
+Categories=System;
+StartupNotify=false

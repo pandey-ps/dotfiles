@@ -1,0 +1,47 @@
+#!/bin/sh
+# konsole compatibility shim: this rice ships kitty, not konsole.
+# Anything asking for KDE's default terminal (dolphin "open with",
+# Terminal=true launchers, xdg helpers) lands in kitty instead.
+# Only the common flags are translated; konsole-only chrome is dropped.
+#
+# KDE also invokes "<title> -qwindowicon <icon> -e <cmd>" (title first);
+# the stray title and icon are dropped so the real command runs.
+dir=""
+has_qw=0
+for a in "$@"; do
+  if [ "$a" = "-qwindowicon" ]; then has_qw=1; break; fi
+done
+if [ "$has_qw" = 1 ]; then
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --workdir|--working-directory) dir="${2:-}"; shift 2; continue ;;
+      --workdir=*|--working-directory=*) dir="${1#*=}"; shift; continue ;;
+      -qwindowicon)
+        shift
+        case "${1:-}" in -*) ;; *) [ $# -gt 0 ] && shift ;; esac
+        break
+        ;;
+      -qwindowicon=*) shift; break ;;
+      *) shift ;;
+    esac
+  done
+  [ "${1:-}" = "-e" ] && shift
+else
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      -e) shift; break ;;
+      --workdir|--working-directory) dir="${2:-}"; shift 2 ;;
+      --workdir=*|--working-directory=*) dir="${1#*=}"; shift ;;
+      --) shift; break ;;
+      -*) shift ;;
+      *) break ;;
+    esac
+  done
+fi
+if [ -n "$dir" ]; then
+  if [ $# -gt 0 ]; then exec kitty --directory="$dir" -e "$@"
+  else exec kitty --directory="$dir"; fi
+else
+  if [ $# -gt 0 ]; then exec kitty -e "$@"
+  else exec kitty; fi
+fi

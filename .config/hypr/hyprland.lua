@@ -4,7 +4,7 @@ hl.monitor({
     output   = "",
     mode     = "preferred",
     position = "auto",
-    scale    = "auto",
+    scale    = 1,
 })
 
 
@@ -15,13 +15,12 @@ local menu        = "fuzzel"
 
 
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24")
+  hl.exec_cmd("hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & wl-paste -p --type text --watch cliphist store & hypridle")
 end)
 
 
 
 hl.env("XCURSOR_SIZE", "24")
-hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
 
 
 
@@ -34,7 +33,8 @@ hl.config({
         sensitivity = -0.25,
 
         touchpad = {
-            natural_scroll = true,
+            natural_scroll = false,
+            scroll_factor  = 0.4,
         },
     },
 })
@@ -45,6 +45,7 @@ hl.config({
         disable_hyprland_logo      = true,
         disable_splash_rendering   = true,
         background_color           = "rgba(15130fff)",
+        focus_on_activate          = true,
     },
 })
 
@@ -53,7 +54,7 @@ hl.config({
 hl.config({
     general = {
         gaps_in  = 6,
-        gaps_out = 12,
+        gaps_out = { top = 6, right = 12, bottom = 12, left = 12 },
         border_size = 3,
         col = {
             active_border   = "rgba(9e948966)",
@@ -122,18 +123,25 @@ hl.config({
     },
 })
 
-hl.config({
-    master = {
-        new_on_top = true,
-    },
-})
-
 
 hl.window_rule({
     name  = "suppress-maximize-events",
     match = { class = ".*" },
     suppress_event = "maximize",
 })
+
+hl.window_rule({
+    name   = "btop-float",
+    match  = { title = "^btop$" },
+    float  = true,
+    size   = { 875, 600 },
+    center = true,
+})
+
+
+for i = 1, 5 do
+    hl.workspace_rule({ workspace = tostring(i), persistent = true })
+end
 
 
 
@@ -143,15 +151,19 @@ hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + ALT + Q", hl.dsp.exit())
-hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)"'))
+hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png'))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("~/.config/waybar/scripts/display-menu.sh"))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("~/.config/waybar/scripts/clip.sh copy"))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.config/waybar/scripts/clip.sh paste"))
+hl.bind("SUPER + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert", window = "activewindow" }))
+hl.bind("SUPER + V", hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert", window = "activewindow" }))
+hl.bind(mainMod .. " + CTRL + V", hl.dsp.exec_cmd("~/.config/waybar/scripts/clip-history.sh"))
+hl.bind(mainMod .. " + CTRL + SPACE", hl.dsp.exec_cmd("~/.config/waybar/scripts/wallpaper-menu.sh"))
 
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("~/.config/waybar/scripts/osd.sh bri-up"))
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/waybar/scripts/osd.sh bri-down"))

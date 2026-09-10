@@ -9,7 +9,7 @@ info_panel() {
   COUNT=$(printf '%s\n' "$1" | wc -l)
   [ "$COUNT" -gt 6 ] && COUNT=6
   [ "$COUNT" -lt 2 ] && COUNT=2
-  printf '%s\n' "$1" | fuzzel --dmenu --lines="$COUNT" >/dev/null 2>&1 || true
+  printf '%s\n' "$1" | fuzzel --dmenu --hide-prompt --lines="$COUNT" >/dev/null 2>&1 || true
   exit 0
 }
 
@@ -22,7 +22,7 @@ if ! command -v nmcli >/dev/null 2>&1; then
 fi
 if ! nmcli general status >/dev/null 2>&1; then
   if command -v systemctl >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
-    CHOICE=$(printf '  start NetworkManager now' | fuzzel --dmenu --lines=1) || exit 0
+    CHOICE=$(printf '  start NetworkManager now' | fuzzel --dmenu --hide-prompt --lines=1) || exit 0
     case "${CHOICE:-}" in
       *start\ NetworkManager*)
         if sudo systemctl enable --now NetworkManager >/dev/null 2>&1; then
@@ -51,17 +51,17 @@ display_of() {
   line=$(printf '%s' "$1" | sed 's/\\:/__COLON__/g')
   use=$(printf '%s' "$line" | cut -d: -f1)
   ssid=$(printf '%s' "$line" | cut -d: -f2 | sed 's/__COLON__/:/g')
-  sig=$(printf '%s' "$line" | cut -d: -f3)
-  sec=$(printf '%s' "$line" | cut -d: -f4 | awk '{print $1}')
-  [ -z "${sec:-}" ] || [ "$sec" = "--" ] && sec="open"
-  mark=" "
-  [ "$use" = "*" ] && mark="▶"
-  printf "%s %s (%s%% %s)" "$mark" "$ssid" "$sig" "$sec"
+  if [ "$use" = "*" ]; then
+    sig=$(printf '%s' "$line" | cut -d: -f3)
+    printf "%s (%s%%)" "$ssid" "$sig"
+  else
+    printf "%s" "$ssid"
+  fi
 }
 
 if [ "$(nmcli -t -f WIFI radio 2>/dev/null)" != "enabled" ]; then
   MENU="  turn wifi on"
-  CHOICE=$(printf '%s\n' "$MENU" | fuzzel --dmenu --lines=1) || exit 0
+  CHOICE=$(printf '%s\n' "$MENU" | fuzzel --dmenu --hide-prompt --lines=1) || exit 0
   [ -z "${CHOICE:-}" ] && exit 0
   if nmcli radio wifi on >/dev/null 2>&1; then
     sleep 2
@@ -72,11 +72,12 @@ if [ "$(nmcli -t -f WIFI radio 2>/dev/null)" != "enabled" ]; then
   exit 0
 fi
 
+nmcli dev wifi rescan ifname "$IFACE" >/dev/null 2>&1 &
 SCAN=$(nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi list ifname "$IFACE" --rescan no 2>/dev/null | grep -v '^::' | grep -v '^$' || true)
 
 MENU=""
 if [ -n "${SCAN:-}" ]; then
-  MENU=$(printf '%s\n' "$SCAN" | sed 's/\\:/__COLON__/g' | sort -t: -k3,3nr | awk -F: '!seen[$2]++' | sed 's/__COLON__/\\:/g' | while IFS= read -r entry; do
+  MENU=$(printf '%s\n' "$SCAN" | sed 's/\\:/__COLON__/g' | sort -t: -k1,1r -k3,3nr | awk -F: '!seen[$2]++' | sed 's/__COLON__/\\:/g' | while IFS= read -r entry; do
     [ -n "${entry:-}" ] || continue
     display_of "$entry"
   done)
@@ -84,11 +85,7 @@ fi
 
 CUR=$(printf '%s\n' "$SCAN" | grep '^\*:' | sed 's/\\:/__COLON__/g' | cut -d: -f2 | sed 's/__COLON__/:/g' | head -1 || true)
 
-ACTIONS="  s rescan for networks"
-[ -n "${CUR:-}" ] && ACTIONS="$ACTIONS
-  d disconnect from $CUR"
-ACTIONS="$ACTIONS
-  join hidden network"
+ACTIONS="join hidden network"
 
 if [ -n "${MENU:-}" ]; then
   MENU="$MENU
@@ -101,24 +98,11 @@ COUNT=$(printf '%s\n' "$MENU" | wc -l)
 [ "$COUNT" -gt 12 ] && COUNT=12
 [ "$COUNT" -lt 2 ] && COUNT=2
 
-CHOICE=$(printf '%s\n' "$MENU" | fuzzel --dmenu --lines="$COUNT") || exit 0
+CHOICE=$(printf '%s\n' "$MENU" | fuzzel --dmenu --hide-prompt --lines="$COUNT") || exit 0
 [ -z "${CHOICE:-}" ] && exit 0
-CLEAN=$(printf '%s' "$CHOICE" | sed 's/^▶ *//; s/^ *//')
+CLEAN=$(printf '%s' "$CHOICE" | sed 's/^ *//')
 
 case "$CLEAN" in
-  s\ rescan*)
-    nmcli dev wifi rescan ifname "$IFACE" >/dev/null 2>&1 || true
-    sleep 5
-    exec "$0"
-    ;;
-  d\ disconnect*)
-    if [ -n "${CUR:-}" ] && nmcli dev disconnect "$IFACE" >/dev/null 2>&1; then
-      notify "disconnected from $CUR"
-    else
-      notify "disconnect failed"
-    fi
-    exit 0
-    ;;
   join\ hidden*)
     SSID=$(fuzzel --dmenu --prompt-only="ssid: " </dev/null) || exit 0
     [ -n "${SSID:-}" ] || exit 0
@@ -151,7 +135,11 @@ if [ -z "${SSID:-}" ]; then
 fi
 
 if [ "${SSID:-}" = "${CUR:-}" ]; then
-  notify "already connected to $SSID"
+  if nmcli dev disconnect "$IFACE" >/dev/null 2>&1; then
+    notify "disconnected from $SSID"
+  else
+    notify "disconnect failed"
+  fi
   exit 0
 fi
 

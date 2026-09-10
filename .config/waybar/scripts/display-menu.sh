@@ -15,7 +15,7 @@ mkdir -p "$CACHE_DIR" 2>/dev/null || true
 LAYOUT_FILE="$CACHE_DIR/layout"
 cur_layout=$(cat "$LAYOUT_FILE" 2>/dev/null || echo "")
 MENU=""
-for item in "auto (all on, best res)" "mirror (same image on all)" "extend right" "extend left" "laptop only" "external only" "arrange (gui)"; do
+for item in "auto (all on, best res)" "laptop only" "external only" "arrange (gui)"; do
   key=$(echo "$item" | cut -d'(' -f1 | xargs | tr 'A-Z' 'a-z')
   if [ -n "$cur_layout" ] && [ "$key" = "$cur_layout" ]; then MENU="${MENU}▶ $item
 "
@@ -23,7 +23,7 @@ for item in "auto (all on, best res)" "mirror (same image on all)" "extend right
 "
   fi
 done
-CHOICE=$(printf '%s' "$MENU" | fuzzel --dmenu --lines=7) || exit 0
+CHOICE=$(printf '%s' "$MENU" | fuzzel --dmenu --hide-prompt --lines=4) || exit 0
 [ -z "${CHOICE:-}" ] && exit 0
 CHOICE=$(echo "$CHOICE" | tr 'A-Z' 'a-z' | sed 's/^▶ *//; s/^ *//')
 if ! command -v hyprctl >/dev/null 2>&1; then
@@ -55,22 +55,6 @@ case "$CHOICE1" in
   auto)
     for out in $MONS; do enable_mon "$out"; done
     ;;
-  mirror)
-    if [ -z "${EXTERNALS:-}" ]; then
-      notify "only one monitor: nothing to mirror"
-    else
-      for out in $EXTERNALS; do apply_mon "$out" "mode=\"preferred\", position=\"auto\", scale=1, mirror=\"$INTERNAL\""; done
-    fi
-    ;;
-  extend)
-    enable_mon "$INTERNAL" "0x0"
-    if echo "$CHOICE" | grep -q "left"; then
-      [ -n "${EXT1:-}" ] && enable_mon "$EXT1" "auto-left"
-    else
-      [ -n "${EXT1:-}" ] && enable_mon "$EXT1" "auto-right"
-    fi
-    [ -z "${EXT1:-}" ] && notify "only one monitor: nothing to extend to"
-    ;;
   laptop)
     for out in $EXTERNALS; do disable_mon "$out"; done
     enable_mon "$INTERNAL"
@@ -94,4 +78,16 @@ case "$CHOICE1" in
     ;;
   *) exit 0 ;;
 esac
+# outputs just changed: force Hyprland to re-evaluate monitors
+# (a monitor enabled via hl.monitor is not always applied without
+# this), let it settle, then bounce the layer daemons so wallpaper
+# + bar attach to the new output set
+hyprctl reload >/dev/null 2>&1 || true
+sleep 2
+pkill -x waybar 2>/dev/null || true
+(nohup waybar >/dev/null 2>&1 &)
+sleep 1
+pkill -x hyprpaper 2>/dev/null || true
+(nohup hyprpaper >/dev/null 2>&1 &)
+sleep 2
 echo "$CHOICE1" > "$LAYOUT_FILE" 2>/dev/null || true

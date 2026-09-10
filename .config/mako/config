@@ -6,5 +6,9 @@ border-color=#9e9489aa
 border-radius=0
 progress-color=#9e9489
 padding=8
-width=320
-height=60
+width=380
+height=55
+default-timeout=3000
+
+[app-name="vesktop"]
+max-icon-size=32
