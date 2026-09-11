@@ -39,7 +39,6 @@ INTERNAL_RE="eDP|LVDS|DSI"
 INTERNAL=$(echo "$MONS" | grep -E "$INTERNAL_RE" | head -1 || true)
 EXTERNALS=$(echo "$MONS" | grep -v -E "^eDP|^LVDS|^DSI" || true)
 EXT1=$(echo "$EXTERNALS" | head -1)
-[ -z "$INTERNAL" ] && INTERNAL=$(echo "$MONS" | head -1)
 apply_mon() {
   out=$1; shift
   hyprctl eval "hl.monitor({output=\"$out\", $*})" >/dev/null 2>&1 || notify "failed to configure $out"

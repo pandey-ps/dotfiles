@@ -14,8 +14,8 @@ if ! command -v pactl >/dev/null 2>&1; then
   exit 1
 fi
 
-get_sink() { pactl get-default-sink 2>/dev/null || pactl info 2>/dev/null | awk -F': ' '/Default Sink/{print $2}'; }
-get_src()  { pactl get-default-source 2>/dev/null || pactl info 2>/dev/null | awk -F': ' '/Default Source/{print $2}'; }
+get_sink() { pactl get-default-sink 2>/dev/null || true; }
+get_src()  { pactl get-default-source 2>/dev/null || true; }
 CUR_SINK=$(get_sink || true)
 CUR_SRC=$(get_src || true)
 

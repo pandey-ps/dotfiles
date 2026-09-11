@@ -11,7 +11,6 @@ if ! command -v fuzzel >/dev/null 2>&1; then
 fi
 
 DIR="$HOME/dotfiles/wallpapers"
-[ -d "$DIR" ] || DIR="$HOME/Pictures/Wallpapers"
 if [ ! -d "$DIR" ]; then
   notify "no wallpapers directory found"
   exit 1
@@ -37,11 +36,7 @@ FILE="$DIR/$CHOICE"
 if command -v hyprctl >/dev/null 2>&1; then
   hyprctl hyprpaper wallpaper ",$FILE,cover" >/dev/null 2>&1 || true
 fi
-for conf in "$HOME/.config/hypr/hyprpaper.conf" "$HOME/dotfiles/.config/hypr/hyprpaper.conf"; do
-  [ -f "$conf" ] || continue
-  sed -i "s|^[[:space:]]*path = .*|    path = $FILE|" "$conf" 2>/dev/null || true
-done
-for conf in "$HOME/.config/hypr/hyprlock.conf" "$HOME/dotfiles/.config/hypr/hyprlock.conf"; do
+for conf in "$HOME/.config/hypr/hyprpaper.conf" "$HOME/dotfiles/.config/hypr/hyprpaper.conf" "$HOME/.config/hypr/hyprlock.conf" "$HOME/dotfiles/.config/hypr/hyprlock.conf"; do
   [ -f "$conf" ] || continue
   sed -i "s|^[[:space:]]*path = .*|    path = $FILE|" "$conf" 2>/dev/null || true
 done

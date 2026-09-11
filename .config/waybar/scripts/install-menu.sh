@@ -19,11 +19,8 @@ case "$SRC" in
     LIST=$(pacman -Slq 2>/dev/null || true)
     ;;
   aur)
-    HELPER=""
-    if command -v yay >/dev/null 2>&1; then HELPER=yay
-    elif command -v paru >/dev/null 2>&1; then HELPER=paru
-    else notify "no AUR helper (yay/paru) installed"; exit 1
-    fi
+    HELPER="yay"
+    if ! command -v yay >/dev/null 2>&1; then notify "yay not installed"; exit 1; fi
     CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/install-menu"
     CACHE_FILE="$CACHE_DIR/aur-list"
     mkdir -p "$CACHE_DIR" 2>/dev/null || true

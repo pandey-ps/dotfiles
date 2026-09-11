@@ -91,7 +91,9 @@
 		"tooltip": false,
 		"format": "{}",
 		"interval": 10,
-		"exec": "date +'%a, %H:%M' | tr 'A-Z' 'a-z'"
+		"signal": 8,
+		"exec": "~/.config/waybar/scripts/clock.sh",
+		"on-click": "~/.config/waybar/scripts/clock.sh toggle"
 	},
 	"wireplumber": {
 		"format": "{volume}%",

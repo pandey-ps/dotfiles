@@ -154,12 +154,6 @@ hl.window_rule({
     center = true,
 })
 
-hl.window_rule({
-    name    = "terminal-no-blur",
-    match   = { class = "^Alacritty$" },
-    no_blur = true,
-})
-
 
 for i = 1, 5 do
     hl.workspace_rule({ workspace = tostring(i), persistent = true })

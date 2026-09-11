@@ -1,0 +1,24 @@
+#!/bin/sh
+# run opencode with zero padding in THIS window (shell keeps its own);
+# restores afterwards. No-op outside alacritty.
+real=""
+oldifs=$IFS
+IFS=:
+for d in $PATH; do
+  cand="$d/opencode"
+  if [ -x "$cand" ] && [ ! "$cand" -ef "$0" ]; then real="$cand"; break; fi
+done
+IFS=$oldifs
+if [ -z "${real:-}" ]; then
+  command -v notify-send >/dev/null 2>&1 && notify-send "opencode" "real opencode binary not found" 2>/dev/null || true
+  exit 1
+fi
+if [ -n "${ALACRITTY_WINDOW_ID:-}" ]; then
+  alacritty msg config -w "$ALACRITTY_WINDOW_ID" 'window.padding={x=0,y=0}' >/dev/null 2>&1 || true
+fi
+"$real" "$@"
+rc=$?
+if [ -n "${ALACRITTY_WINDOW_ID:-}" ]; then
+  alacritty msg config -w "$ALACRITTY_WINDOW_ID" 'window.padding={x=12,y=12}' >/dev/null 2>&1 || true
+fi
+exit $rc

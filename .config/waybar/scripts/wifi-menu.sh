@@ -21,20 +21,6 @@ if ! command -v nmcli >/dev/null 2>&1; then
   info_panel "  nmcli not installed (install NetworkManager)"
 fi
 if ! nmcli general status >/dev/null 2>&1; then
-  if command -v systemctl >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
-    CHOICE=$(printf '  start NetworkManager now' | fuzzel --dmenu --hide-prompt --lines=1) || exit 0
-    case "${CHOICE:-}" in
-      *start\ NetworkManager*)
-        if sudo systemctl enable --now NetworkManager >/dev/null 2>&1; then
-          sleep 2
-          exec "$0"
-        else
-          notify "could not start NetworkManager"
-        fi
-        ;;
-    esac
-    exit 0
-  fi
   info_panel "  NetworkManager not running"
 fi
 

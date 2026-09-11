@@ -69,7 +69,8 @@ mkdir -p ~/Pictures/Screenshots
 mkdir -p ~/.local/bin
 cp "$RICE/bin/hyprctl" ~/.local/bin/hyprctl
 cp "$RICE/bin/konsole" ~/.local/bin/konsole
-chmod +x ~/.local/bin/hyprctl ~/.local/bin/konsole
+cp "$RICE/bin/opencode" ~/.local/bin/opencode
+chmod +x ~/.local/bin/hyprctl ~/.local/bin/konsole ~/.local/bin/opencode
 sudo install -m755 "$RICE/bin/hyprctl" /usr/local/bin/hyprctl 2>/dev/null || true
 sudo install -m755 "$RICE/bin/konsole" /usr/local/bin/konsole 2>/dev/null || true
 for RC in ~/.bashrc ~/.zshrc; do

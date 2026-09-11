@@ -11,9 +11,6 @@ if ! command -v fuzzel >/dev/null 2>&1; then
 fi
 
 cur=$(powerprofilesctl get 2>/dev/null | tr 'A-Z' 'a-z' || true)
-if [ -z "${cur:-}" ]; then
-  cur=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null | tr 'A-Z' 'a-z' | sed 's/powersave/power-saver/; s/schedutil/balanced/' || true)
-fi
 
 bat=""
 for d in /sys/class/power_supply/BAT*; do
