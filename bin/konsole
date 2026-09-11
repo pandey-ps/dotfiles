@@ -1,7 +1,7 @@
 #!/bin/sh
-# konsole compatibility shim: this rice ships kitty, not konsole.
+# konsole compatibility shim: this rice ships alacritty, not konsole.
 # Anything asking for KDE's default terminal (file manager "open with",
-# Terminal=true launchers, xdg helpers) lands in kitty instead.
+# Terminal=true launchers, xdg helpers) lands in alacritty instead.
 # Only the common flags are translated; konsole-only chrome is dropped.
 #
 # KDE also invokes "<title> -qwindowicon <icon> -e <cmd>" (title first);
@@ -39,9 +39,9 @@ else
   done
 fi
 if [ -n "$dir" ]; then
-  if [ $# -gt 0 ]; then exec kitty --directory="$dir" -e "$@"
-  else exec kitty --directory="$dir"; fi
+  if [ $# -gt 0 ]; then exec alacritty --working-directory="$dir" -e "$@"
+  else exec alacritty --working-directory="$dir"; fi
 else
-  if [ $# -gt 0 ]; then exec kitty -e "$@"
-  else exec kitty; fi
+  if [ $# -gt 0 ]; then exec alacritty -e "$@"
+  else exec alacritty; fi
 fi

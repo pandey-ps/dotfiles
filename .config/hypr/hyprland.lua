@@ -8,7 +8,7 @@ hl.monitor({
 })
 
 
-local terminal    = "kitty"
+local terminal    = "alacritty"
 local fileManager = "nautilus"
 local menu        = "fuzzel"
 
@@ -152,6 +152,12 @@ hl.window_rule({
     float  = true,
     size   = { 875, 600 },
     center = true,
+})
+
+hl.window_rule({
+    name    = "terminal-no-blur",
+    match   = { class = "^Alacritty$" },
+    no_blur = true,
 })
 
 

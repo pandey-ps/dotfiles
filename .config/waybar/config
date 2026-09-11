@@ -77,7 +77,7 @@
 	"custom/btop": {
 		"tooltip": false,
 		"format": "btop",
-		"on-click": "kitty --title btop -e btop"
+		"on-click": "alacritty --title btop -e btop"
 	},
 	"custom/time": {
 		"tooltip": false,

@@ -63,8 +63,8 @@ case "$SRC" in
     ;;
 esac
 
-if ! command -v kitty >/dev/null 2>&1; then
-  notify "kitty not installed"
+if ! command -v alacritty >/dev/null 2>&1; then
+  notify "alacritty not installed"
   exit 1
 fi
-kitty --title "install $PKG" -e sh -c "$INSTALL_CMD; echo; printf 'done - press enter '; read -r _" >/dev/null 2>&1 &
+alacritty --title "install $PKG" -e sh -c "$INSTALL_CMD; echo; printf 'done - press enter '; read -r _" >/dev/null 2>&1 &

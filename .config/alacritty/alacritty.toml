@@ -1,0 +1,49 @@
+[window]
+opacity = 0.6
+padding = { x = 12, y = 12 }
+
+[scrolling]
+history = 1024
+
+[font]
+normal = { family = "Courier Prime", style = "SemiBold" }
+size = 12.0
+
+[cursor]
+style = { shape = "Underline", blinking = "On" }
+
+[colors.primary]
+background = "#0c0c09"
+foreground = "#eae5e1"
+
+[colors.selection]
+text = "#0c0c09"
+background = "#eae5e1"
+
+[colors.normal]
+black = "#8d9185"
+red = "#b1b69d"
+green = "#cab38e"
+yellow = "#d4c8b2"
+blue = "#d1c3b4"
+magenta = "#d3c7ba"
+cyan = "#ded6ce"
+white = "#eae5e1"
+
+[colors.bright]
+black = "#b9b6af"
+red = "#b1b69d"
+green = "#cab38e"
+yellow = "#d4c8b2"
+blue = "#d1c3b4"
+magenta = "#d3c7ba"
+cyan = "#ded6ce"
+white = "#eae5e1"
+
+[keyboard]
+bindings = [
+  { key = "Insert", mods = "Control", action = "Copy" },
+  { key = "Insert", mods = "Shift", action = "Paste" },
+  { key = "=", mods = "Control", action = "IncreaseFontSize" },
+  { key = "-", mods = "Control", action = "DecreaseFontSize" },
+]
