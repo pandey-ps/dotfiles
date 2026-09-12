@@ -130,5 +130,12 @@ sudo systemctl enable --now NetworkManager 2>/dev/null || true
 sudo systemctl enable --now power-profiles-daemon 2>/dev/null || true
 sudo timedatectl set-timezone Asia/Kolkata 2>/dev/null || true
 
+# lid close does nothing (logind default would suspend)
+if command -v systemctl >/dev/null 2>&1; then
+  sudo mkdir -p /etc/systemd/logind.conf.d
+  printf '[Login]\nHandleLidSwitch=ignore\nHandleLidSwitchExternalPower=ignore\nHandleLidSwitchDocked=ignore\n' | sudo tee /etc/systemd/logind.conf.d/rice-lid.conf >/dev/null
+  sudo systemctl restart systemd-logind 2>/dev/null || true
+fi
+
 echo "launch with:  start-hyprland"
 echo "keys: Super+Return terminal, Super+Space launcher, Super+W kill, Super+1..0 workspaces"
