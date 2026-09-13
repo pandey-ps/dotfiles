@@ -8,12 +8,12 @@ popup() {
 }
 
 case "$1" in
-  vol-up) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ 2>/dev/null ;;
-  vol-down) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- 2>/dev/null ;;
+  vol-up) wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+ 2>/dev/null ;;
+  vol-down) wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%- 2>/dev/null ;;
   mute) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle 2>/dev/null ;;
-  bri-up) brightnessctl s 5%+ >/dev/null 2>&1 ;;
+  bri-up) brightnessctl s 10%+ >/dev/null 2>&1 ;;
   bri-down)
-    brightnessctl s 5%- >/dev/null 2>&1
+    brightnessctl s 10%- >/dev/null 2>&1
     pct=$(brightnessctl -m 2>/dev/null | head -1 | cut -d, -f4 | tr -d '%') || pct=0
     case "$pct" in ''|*[!0-9]*) pct=0 ;; esac
     [ "$pct" -lt 5 ] && brightnessctl s 5% >/dev/null 2>&1 || true
