@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=sleep
+Comment=suspend the machine
+Keywords=sleep;suspend;lock;
+Exec=systemctl suspend
+Terminal=false
+Categories=System;
+StartupNotify=false
