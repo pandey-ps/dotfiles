@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=remove
+Comment=search and remove installed packages
+Keywords=remove;uninstall;packages;pacman;
+Exec=sh -c 'exec "$HOME/.config/waybar/scripts/remove-menu.sh"'
+Terminal=false
+Categories=System;
+StartupNotify=false
