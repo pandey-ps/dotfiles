@@ -15,7 +15,7 @@ local menu        = "fuzzel"
 
 
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("hyprlock --immediate-render & hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
+  hl.exec_cmd("dbus-update-activation-environment --systemd --all & gnome-keyring-daemon --start --components=secrets,pkcs11 & hyprlock --immediate-render & hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
 end)
 
 

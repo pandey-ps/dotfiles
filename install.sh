@@ -9,10 +9,10 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-PACMAN_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-audio pipewire-pulse sof-firmware power-profiles-daemon python-gobject libpulse wdisplays cliphist wl-clipboard fastfetch btop imv mpv noto-fonts-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk libnotify neovim git base-devel curl pciutils seatd polkit networkmanager"
+PACMAN_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-audio pipewire-pulse sof-firmware power-profiles-daemon python-gobject libpulse wdisplays cliphist wl-clipboard fastfetch btop imv mpv noto-fonts-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk libnotify neovim git base-devel curl pciutils seatd polkit networkmanager gnome-keyring"
 AUR_PKGS="ttf-courier-prime python-pywal"
-APT_PKGS="hyprland waybar mako alacritty fuzzel nautilus grim slurp brightnessctl pipewire-pulse firmware-sof-signed power-profiles-daemon python3-gi wdisplays cliphist wl-clipboard fastfetch btop imv mpv fonts-noto-color-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk hyprlock hypridle pulseaudio-utils libnotify-bin neovim git build-essential curl seatd polkitd network-manager"
-DNF_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-pulseaudio alsa-sof-firmware power-profiles-daemon python3-gobject wdisplays cliphist wl-clipboard fastfetch btop imv starship google-noto-emoji-color-fonts gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk pulseaudio-utils libnotify neovim git gcc make curl seatd polkit NetworkManager"
+APT_PKGS="hyprland waybar mako alacritty fuzzel nautilus grim slurp brightnessctl pipewire-pulse firmware-sof-signed power-profiles-daemon python3-gi wdisplays cliphist wl-clipboard fastfetch btop imv mpv fonts-noto-color-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk hyprlock hypridle pulseaudio-utils libnotify-bin neovim git build-essential curl seatd polkitd network-manager gnome-keyring"
+DNF_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-pulseaudio alsa-sof-firmware power-profiles-daemon python3-gobject wdisplays cliphist wl-clipboard fastfetch btop imv starship google-noto-emoji-color-fonts gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk pulseaudio-utils libnotify neovim git gcc make curl seatd polkit NetworkManager gnome-keyring"
 
 PM=""
 if command -v pacman >/dev/null; then PM="pacman"
@@ -40,6 +40,7 @@ fi
 
 sudo systemctl enable --now seatd 2>/dev/null || true
 sudo usermod -aG seat "$USER" 2>/dev/null || true
+systemctl --user enable --now gnome-keyring-daemon.socket 2>/dev/null || true
 
 # tty1 autologin so the machine boots straight into Hyprland
 # (companion piece: ~/.bash_profile execs start-hyprland on tty1)
