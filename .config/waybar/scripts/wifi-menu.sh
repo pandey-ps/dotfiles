@@ -39,9 +39,9 @@ display_of() {
   ssid=$(printf '%s' "$line" | cut -d: -f2 | sed 's/__COLON__/:/g')
   if [ "$use" = "*" ]; then
     sig=$(printf '%s' "$line" | cut -d: -f3)
-    printf "%s (%s%%)" "$ssid" "$sig"
+    printf "%s (%s%%)\n" "$ssid" "$sig"
   else
-    printf "%s" "$ssid"
+    printf "%s\n" "$ssid"
   fi
 }
 
@@ -120,16 +120,49 @@ if [ -z "${SSID:-}" ]; then
   exit 0
 fi
 
-if [ "${SSID:-}" = "${CUR:-}" ]; then
-  if nmcli dev disconnect "$IFACE" >/dev/null 2>&1; then
-    notify "disconnected from $SSID"
-  else
-    notify "disconnect failed"
-  fi
-  exit 0
+SAVED="no"
+if nmcli -t -f NAME con show 2>/dev/null | grep -qxF -- "$SSID"; then
+  SAVED="yes"
 fi
 
-if nmcli -t -f NAME con show 2>/dev/null | grep -qxF -- "$SSID"; then
+if [ "$SSID" = "${CUR:-}" ]; then
+  ACT_MENU="disconnect"
+else
+  ACT_MENU="connect"
+fi
+if [ "$SAVED" = "yes" ]; then
+  ACT_MENU="${ACT_MENU}
+forget"
+fi
+
+ACT_COUNT=$(printf '%s\n' "$ACT_MENU" | wc -l)
+[ "$ACT_COUNT" -lt 2 ] && ACT_COUNT=2
+ACTION=$(printf '%s\n' "$ACT_MENU" | fuzzel --dmenu --prompt="$SSID" --lines="$ACT_COUNT") || exit 0
+ACTION=$(printf '%s' "${ACTION:-}" | sed 's/^ *//')
+[ -n "$ACTION" ] || exit 0
+
+case "$ACTION" in
+  disconnect)
+    if nmcli dev disconnect "$IFACE" >/dev/null 2>&1; then
+      notify "disconnected from $SSID"
+    else
+      notify "disconnect failed"
+    fi
+    exit 0
+    ;;
+  forget)
+    if nmcli con delete id "$SSID" >/dev/null 2>&1; then
+      notify "forgot $SSID"
+    else
+      notify "forget failed"
+    fi
+    exit 0
+    ;;
+  connect) ;;
+  *) exit 0 ;;
+esac
+
+if [ "$SAVED" = "yes" ]; then
   OUT=$(nmcli con up id "$SSID" 2>&1)
   if [ $? -eq 0 ]; then notify "connected to $SSID"; else notify "connect failed: $OUT"; fi
   exit 0
