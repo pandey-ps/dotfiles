@@ -44,7 +44,6 @@ white = "#eae5e1"
 bindings = [
   { key = "Insert", mods = "Control", action = "Copy" },
   { key = "Insert", mods = "Shift", action = "Paste" },
-  { key = "X", mods = "Control", action = "Cut" },
   { key = "=", mods = "Control", action = "IncreaseFontSize" },
   { key = "-", mods = "Control", action = "DecreaseFontSize" },
 ]
