@@ -178,6 +178,7 @@ hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
 hl.bind("SUPER + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert", window = "activewindow" }))
 hl.bind("SUPER + V", hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert", window = "activewindow" }))
+hl.bind("SUPER + X", hl.dsp.send_shortcut({ mods = "CTRL", key = "X", window = "activewindow" }))
 hl.bind(mainMod .. " + CTRL + V", hl.dsp.exec_cmd("~/.config/waybar/scripts/clip-history.sh"))
 hl.bind(mainMod .. " + CTRL + SPACE", hl.dsp.exec_cmd("~/.config/waybar/scripts/wallpaper-menu.sh"))
 
