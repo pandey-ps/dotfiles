@@ -21,6 +21,8 @@ elif command -v dnf >/dev/null; then PM="dnf"
 fi
 
 if [ "$PM" = "pacman" ]; then
+  # steam and other 32-bit apps live in multilib
+  grep -q '^#\[multilib\]$' /etc/pacman.conf && sudo sed -i '/^#\[multilib\]$/,+1 s/^#//' /etc/pacman.conf || true
   sudo pacman -Syu --needed --noconfirm $PACMAN_PKGS
 
   if ! command -v yay >/dev/null; then
@@ -136,6 +138,13 @@ if command -v systemctl >/dev/null 2>&1; then
   sudo mkdir -p /etc/systemd/logind.conf.d
   printf '[Login]\nHandleLidSwitch=ignore\nHandleLidSwitchExternalPower=ignore\nHandleLidSwitchDocked=ignore\n' | sudo tee /etc/systemd/logind.conf.d/rice-lid.conf >/dev/null
   sudo systemctl restart systemd-logind 2>/dev/null || true
+fi
+
+# don't hang on shutdown/reboot: force-kill stop jobs after 5s (default 90s)
+if command -v systemctl >/dev/null 2>&1; then
+  sudo mkdir -p /etc/systemd/system.conf.d /etc/systemd/user.conf.d
+  printf '[Manager]\nDefaultTimeoutStopSec=5s\n' | sudo tee /etc/systemd/system.conf.d/timeout.conf >/dev/null
+  printf '[Manager]\nDefaultTimeoutStopSec=5s\n' | sudo tee /etc/systemd/user.conf.d/timeout.conf >/dev/null
 fi
 
 echo "launch with:  start-hyprland"
