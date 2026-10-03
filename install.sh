@@ -61,6 +61,10 @@ for d in hypr waybar mako alacritty starship fuzzel nvim; do
   cp -a "$RICE/.config/$d/." ~/.config/$d/
 done
 chmod +x ~/.config/waybar/scripts/*.sh 2>/dev/null || true
+
+for conf in ~/.config/hypr/hyprpaper.conf ~/.config/hypr/hyprlock.conf; do
+  [ -f "$conf" ] && sed -i "s|^[[:space:]]*path = .*/wallpapers/\(.*\)$|    path = $RICE/wallpapers/\1|" "$conf" 2>/dev/null || true
+done
 mkdir -p ~/.local/share/applications
 cp "$RICE"/applications/*.desktop ~/.local/share/applications/ 2>/dev/null || true
 if [ -f ~/.config/hypr/hyprland.conf ] && [ ! -e ~/.config/hypr/hyprland.conf.bak ]; then
