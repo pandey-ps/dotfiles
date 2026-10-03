@@ -30,7 +30,7 @@ if ! command -v hyprctl >/dev/null 2>&1; then
   notify "hyprctl not found"
   exit 1
 fi
-MONS=$(hyprctl monitors 2>/dev/null | awk '/^Monitor /{print $2}')
+MONS=$(hyprctl monitors all 2>/dev/null | awk '/^Monitor /{print $2}')
 if [ -z "${MONS:-}" ]; then
   notify "no monitors reported by hyprctl"
   exit 1
@@ -44,7 +44,7 @@ apply_mon() {
   hyprctl eval "hl.monitor({output=\"$out\", $*})" >/dev/null 2>&1 || notify "failed to configure $out"
 }
 enable_mon() {
-  apply_mon "$1" "mode=\"preferred\", position=\"${2:-auto}\", scale=1"
+  apply_mon "$1" "mode=\"preferred\", position=\"${2:-auto}\", scale=1, disabled=false"
 }
 disable_mon() {
   hyprctl eval "hl.monitor({output=\"$1\", disabled=true})" >/dev/null 2>&1 || notify "failed to disable $1"
@@ -77,16 +77,16 @@ case "$CHOICE1" in
     ;;
   *) exit 0 ;;
 esac
-# outputs just changed: force Hyprland to re-evaluate monitors
-# (a monitor enabled via hl.monitor is not always applied without
-# this), let it settle, then bounce the layer daemons so wallpaper
-# + bar attach to the new output set
-hyprctl reload >/dev/null 2>&1 || true
-sleep 2
-pkill -x waybar 2>/dev/null || true
-(nohup waybar >/dev/null 2>&1 &)
 sleep 1
-pkill -x hyprpaper 2>/dev/null || true
-(nohup hyprpaper >/dev/null 2>&1 &)
-sleep 2
 echo "$CHOICE1" > "$LAYOUT_FILE" 2>/dev/null || true
+pkill -x waybar 2>/dev/null || true
+i=0
+while [ "$i" -lt 3 ]; do
+  nohup waybar >/dev/null 2>&1 &
+  sleep 1
+  pgrep -x waybar >/dev/null 2>&1 && break
+  i=$((i + 1))
+done
+pkill -x hyprpaper 2>/dev/null || true
+sleep 1
+nohup hyprpaper >/dev/null 2>&1 &
