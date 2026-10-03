@@ -39,11 +39,23 @@ INTERNAL_RE="eDP|LVDS|DSI"
 INTERNAL=$(echo "$MONS" | grep -E "$INTERNAL_RE" | head -1 || true)
 EXTERNALS=$(echo "$MONS" | grep -v -E "^eDP|^LVDS|^DSI" || true)
 EXT1=$(echo "$EXTERNALS" | head -1)
+active_ws_on() {
+  hyprctl monitors all 2>/dev/null | awk -v m="Monitor $1" 'index($0,m)==1{f=1;next} /^Monitor /{f=0} f && /active workspace:/{print $3; exit}'
+}
+ws_has_windows() {
+  hyprctl workspaces 2>/dev/null | awk -v w="$1" '$1=="workspace" && $3==w{f=1;next} /^workspace /{f=0} f && $1=="windows:"{print ($2+0>0)?1:0; exit}'
+}
+mon_disabled() {
+  hyprctl monitors all 2>/dev/null | awk -v m="Monitor $1" 'index($0,m)==1{f=1;next} /^Monitor /{f=0} f && /disabled:/{print ($2=="true")?1:0; exit}'
+}
+CARRY=""
+FOCUS_MON=""
 apply_mon() {
   out=$1; shift
   hyprctl eval "hl.monitor({output=\"$out\", $*})" >/dev/null 2>&1 || notify "failed to configure $out"
 }
 enable_mon() {
+  [ "$(mon_disabled "$1")" = "1" ] || return 0
   apply_mon "$1" "mode=\"preferred\", position=\"${2:-auto}\", scale=1, disabled=false"
 }
 disable_mon() {
@@ -55,6 +67,8 @@ case "$CHOICE1" in
     for out in $MONS; do enable_mon "$out"; done
     ;;
   laptop)
+    CARRY=$(active_ws_on "$EXT1")
+    FOCUS_MON="$INTERNAL"
     for out in $EXTERNALS; do disable_mon "$out"; done
     enable_mon "$INTERNAL"
     ;;
@@ -62,6 +76,8 @@ case "$CHOICE1" in
     if [ -z "${EXT1:-}" ]; then
       notify "no external monitor found"
     else
+      CARRY=$(active_ws_on "$INTERNAL")
+      FOCUS_MON="$EXT1"
       enable_mon "$EXT1"
       for out in $EXTERNALS; do [ "$out" != "$EXT1" ] && enable_mon "$out" "auto-right"; done
       disable_mon "$INTERNAL"
@@ -90,3 +106,12 @@ done
 pkill -x hyprpaper 2>/dev/null || true
 sleep 1
 nohup hyprpaper >/dev/null 2>&1 &
+case "$CARRY" in ''|*[!0-9]*) CARRY="" ;; esac
+[ -z "$CARRY" ] || [ "$(ws_has_windows "$CARRY")" = "1" ] || CARRY=""
+[ -n "$FOCUS_MON" ] && hyprctl dispatch "hl.dsp.focus({monitor=\"$FOCUS_MON\"})" >/dev/null 2>&1 || true
+if [ -z "$CARRY" ]; then
+  ACT=$(hyprctl activeworkspace 2>/dev/null | awk '/workspace ID/{print $3; exit}')
+  case "$ACT" in ''|*[!0-9]*) ACT="" ;; esac
+  [ "$(ws_has_windows "$ACT")" = "1" ] || CARRY=$(hyprctl workspaces 2>/dev/null | awk '/^workspace /{id=$3} $1=="windows:" && $2+0>0{print id; exit}')
+fi
+[ -n "$CARRY" ] && hyprctl dispatch "hl.dsp.focus({workspace=$CARRY})" >/dev/null 2>&1 || true
