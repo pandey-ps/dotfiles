@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=shutdown
-Comment=power off the machine
-Keywords=shutdown;poweroff;power;off;
-Exec=systemctl poweroff
-Terminal=false
-Categories=System;
-StartupNotify=false

@@ -21,8 +21,9 @@
 		"custom/battery", "battery",
 		"custom/display",
 		"custom/wifi", "network", "custom/btop",
-		"tray",
-		"custom/spacing"
+		"custom/system",
+		"custom/spacing",
+		"tray"
 	],
 
 	"ext/workspaces": {
@@ -78,6 +79,11 @@
 		"tooltip": false,
 		"format": "btop",
 		"on-click": "alacritty msg create-window -o 'window.padding={x=0,y=0}' --title btop -e btop || alacritty --title btop -e btop"
+	},
+	"custom/system": {
+		"tooltip": false,
+		"format": "system",
+		"on-click": "~/.config/waybar/scripts/system-menu.sh"
 	},
 	"custom/time": {
 		"tooltip": false,

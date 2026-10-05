@@ -14,7 +14,7 @@ window#waybar {
 	transition-duration: .5s;
 }
 
-#custom-workspaces, #custom-volume, #custom-battery, #custom-wifi, #custom-display, #custom-btop, #custom-time {
+#custom-workspaces, #custom-volume, #custom-battery, #custom-wifi, #custom-display, #custom-btop, #custom-system, #custom-time {
 	margin: 2px 10px;
 	padding-top: 5px;
 
@@ -77,6 +77,16 @@ button:hover {
 	border-right: 2px solid rgba(158, 148, 137, 0.13);
 	margin-right: 0px;
 	padding-right: 10px;
+}
+
+#custom-btop, #custom-system {
+	border-right: 2px solid rgba(158, 148, 137, 0.13);
+	margin-right: 0px;
+	padding-right: 10px;
+}
+
+#tray {
+	border-right: none;
 }
 
 #custom-time {
