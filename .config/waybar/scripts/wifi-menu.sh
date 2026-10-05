@@ -5,6 +5,12 @@ notify() {
   command -v notify-send >/dev/null 2>&1 && notify-send "Wi-Fi" "$1" 2>/dev/null || true
 }
 
+confirm_up() {
+  gw=$(ip route show default dev "$IFACE" 2>/dev/null | awk '$1=="default"{print $3; exit}')
+  if [ -z "${gw:-}" ]; then notify "connected to $1, no route"; return 0; fi
+  if ping -c1 -W2 "$gw" >/dev/null 2>&1; then notify "connected to $1"; else notify "connected to $1, router not responding"; fi
+}
+
 info_panel() {
   COUNT=$(printf '%s\n' "$1" | wc -l)
   [ "$COUNT" -gt 6 ] && COUNT=6
@@ -98,7 +104,7 @@ case "$CLEAN" in
     else
       OUT=$(nmcli dev wifi connect "$SSID" hidden yes 2>&1)
     fi
-    if [ $? -eq 0 ]; then notify "connected to $SSID"; else notify "connect failed: $OUT"; fi
+    if [ $? -eq 0 ]; then confirm_up "$SSID"; else notify "connect failed: $OUT"; fi
     exit 0
     ;;
 esac
@@ -164,17 +170,17 @@ esac
 
 if [ "$SAVED" = "yes" ]; then
   OUT=$(nmcli con up id "$SSID" 2>&1)
-  if [ $? -eq 0 ]; then notify "connected to $SSID"; else notify "connect failed: $OUT"; fi
+  if [ $? -eq 0 ]; then confirm_up "$SSID"; else notify "connect failed: $OUT"; fi
   exit 0
 fi
 
 if [ -z "${SEC:-}" ] || [ "$SEC" = "--" ]; then
   OUT=$(nmcli dev wifi connect "$SSID" 2>&1)
-  if [ $? -eq 0 ]; then notify "connected to $SSID"; else notify "connect failed: $OUT"; fi
+  if [ $? -eq 0 ]; then confirm_up "$SSID"; else notify "connect failed: $OUT"; fi
   exit 0
 fi
 
 PASS=$(fuzzel --dmenu --prompt-only="password for $SSID: " --password </dev/null) || exit 0
 [ -n "${PASS:-}" ] || exit 0
 OUT=$(nmcli dev wifi connect "$SSID" password "$PASS" 2>&1)
-if [ $? -eq 0 ]; then notify "connected to $SSID"; else notify "connect failed: $OUT"; fi
+if [ $? -eq 0 ]; then confirm_up "$SSID"; else notify "connect failed: $OUT"; fi

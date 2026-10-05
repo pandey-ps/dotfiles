@@ -17,10 +17,11 @@
 
 	"modules-right": [
 		"custom/time","custom/clock",
+		"custom/btop",
 		"custom/volume", "wireplumber",
 		"custom/battery", "battery",
 		"custom/display",
-		"custom/wifi", "network", "custom/btop",
+		"custom/wifi", "network",
 		"custom/system",
 		"custom/spacing",
 		"tray"
@@ -109,6 +110,7 @@
 		"scroll-step": 5.0
 	},
 	"network": {
+		"interface": "wlp0s20f3",
 		"format-wifi": "connected",
 		"format-ethernet": "wired",
 		"format-disconnected": "offline",
