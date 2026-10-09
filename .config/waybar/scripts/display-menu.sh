@@ -95,14 +95,7 @@ case "$CHOICE1" in
 esac
 sleep 1
 echo "$CHOICE1" > "$LAYOUT_FILE" 2>/dev/null || true
-pkill -x waybar 2>/dev/null || true
-i=0
-while [ "$i" -lt 3 ]; do
-  nohup waybar >/dev/null 2>&1 &
-  sleep 1
-  pgrep -x waybar >/dev/null 2>&1 && break
-  i=$((i + 1))
-done
+# waybar self-reconfigures on monitor hotplug; supervisor in hyprland.lua owns the process
 pkill -x hyprpaper 2>/dev/null || true
 sleep 1
 nohup hyprpaper >/dev/null 2>&1 &
