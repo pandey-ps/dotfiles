@@ -96,9 +96,7 @@ esac
 sleep 1
 echo "$CHOICE1" > "$LAYOUT_FILE" 2>/dev/null || true
 # waybar self-reconfigures on monitor hotplug; supervisor in hyprland.lua owns the process
-pkill -x hyprpaper 2>/dev/null || true
-sleep 1
-nohup hyprpaper >/dev/null 2>&1 &
+# hyprpaper likewise supervised; it paints newly-enabled outputs itself
 case "$CARRY" in ''|*[!0-9]*) CARRY="" ;; esac
 [ -z "$CARRY" ] || [ "$(ws_has_windows "$CARRY")" = "1" ] || CARRY=""
 [ -n "$FOCUS_MON" ] && hyprctl dispatch "hl.dsp.focus({monitor=\"$FOCUS_MON\"})" >/dev/null 2>&1 || true
