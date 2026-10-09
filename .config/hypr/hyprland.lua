@@ -15,7 +15,8 @@ local menu        = "fuzzel"
 
 
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("dbus-update-activation-environment --systemd --all & hyprlock --immediate-render & hyprpaper & waybar & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
+  -- ponytail: busy-loop supervisor, use systemd user unit if backoff/health matters
+  hl.exec_cmd("dbus-update-activation-environment --systemd --all & hyprpaper & (while true; do waybar; sleep 1; done) & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
 end)
 
 
