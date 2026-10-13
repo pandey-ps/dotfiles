@@ -136,6 +136,11 @@ sudo systemctl enable --now NetworkManager 2>/dev/null || true
 sudo systemctl enable --now power-profiles-daemon 2>/dev/null || true
 sudo timedatectl set-timezone Asia/Kolkata 2>/dev/null || true
 
+if command -v gsettings >/dev/null 2>&1; then
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null || true
+fi
+
 # lid close does nothing (logind default would suspend)
 if command -v systemctl >/dev/null 2>&1; then
   sudo mkdir -p /etc/systemd/logind.conf.d
