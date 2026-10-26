@@ -22,6 +22,7 @@
 		"custom/battery", "battery",
 		"custom/display",
 		"custom/wifi", "network",
+		"custom/bluetooth", "bluetooth",
 		"custom/system",
 		"custom/spacing",
 		"tray"
@@ -71,6 +72,11 @@
 		"format": "wifi",
 		"on-click": "~/.config/waybar/scripts/wifi-menu.sh"
 	},
+	"custom/bluetooth": {
+		"tooltip": false,
+		"format": "bluetooth",
+		"on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
+	},
 	"custom/display": {
 		"tooltip": false,
 		"format": "display",
@@ -117,6 +123,15 @@
 		"tooltip": false,
 		"on-click": "~/.config/waybar/scripts/wifi-menu.sh",
 		"interval": 5
+	},
+	"bluetooth": {
+		"format": "off",
+		"format-disabled": "disabled",
+		"format-off": "off",
+		"format-on": "on",
+		"format-connected": "connected",
+		"tooltip": false,
+		"on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
 	},
 	"tray": {
 		"icon-size": 16,

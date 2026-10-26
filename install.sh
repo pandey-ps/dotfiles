@@ -9,10 +9,10 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-PACMAN_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-audio pipewire-pulse sof-firmware libpulse wdisplays cliphist wl-clipboard fastfetch btop imv mpv noto-fonts-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk libnotify neovim git base-devel curl pciutils seatd polkit networkmanager noto-fonts ttf-dejavu ttf-liberation poppler-data"
+PACMAN_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-audio pipewire-pulse sof-firmware libpulse wdisplays cliphist wl-clipboard fastfetch btop imv mpv noto-fonts-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk libnotify neovim git base-devel curl pciutils seatd polkit networkmanager bluez bluez-utils noto-fonts ttf-dejavu ttf-liberation poppler-data"
 AUR_PKGS="ttf-courier-prime python-pywal"
-APT_PKGS="hyprland waybar mako alacritty fuzzel nautilus grim slurp brightnessctl pipewire-pulse firmware-sof-signed wdisplays cliphist wl-clipboard fastfetch btop imv mpv fonts-noto-color-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk hyprlock hypridle pulseaudio-utils libnotify-bin neovim git build-essential curl seatd polkitd network-manager fonts-dejavu-core fonts-liberation fonts-noto-core poppler-data"
-DNF_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-pulseaudio alsa-sof-firmware wdisplays cliphist wl-clipboard fastfetch btop imv starship google-noto-emoji-color-fonts gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk pulseaudio-utils libnotify neovim git gcc make curl seatd polkit NetworkManager dejavu-sans-fonts liberation-fonts google-noto-sans-fonts poppler-data"
+APT_PKGS="hyprland waybar mako alacritty fuzzel nautilus grim slurp brightnessctl pipewire-pulse firmware-sof-signed wdisplays cliphist wl-clipboard fastfetch btop imv mpv fonts-noto-color-emoji starship gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk hyprlock hypridle pulseaudio-utils libnotify-bin neovim git build-essential curl seatd polkitd network-manager bluez fonts-dejavu-core fonts-liberation fonts-noto-core poppler-data"
+DNF_PKGS="hyprland hyprpaper hyprlock hypridle waybar mako alacritty fuzzel nautilus grim slurp brightnessctl wireplumber pipewire-pulseaudio alsa-sof-firmware wdisplays cliphist wl-clipboard fastfetch btop imv starship google-noto-emoji-color-fonts gnome-calculator xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk pulseaudio-utils libnotify neovim git gcc make curl seatd polkit NetworkManager bluez dejavu-sans-fonts liberation-fonts google-noto-sans-fonts poppler-data"
 
 PM=""
 if command -v pacman >/dev/null; then PM="pacman"
@@ -133,6 +133,7 @@ EOF
 fi
 
 sudo systemctl enable --now NetworkManager 2>/dev/null || true
+sudo systemctl enable --now bluetooth 2>/dev/null || true
 sudo systemctl enable --now power-profiles-daemon 2>/dev/null || true
 sudo timedatectl set-timezone Asia/Kolkata 2>/dev/null || true
 
