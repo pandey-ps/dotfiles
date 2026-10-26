@@ -148,10 +148,10 @@ esac
 
 if ! printf '%s' "$INFO" | grep -q "Paired: yes"; then
   bluetoothctl scan off >/dev/null 2>&1 || true
-  OUT=$(bluetoothctl pair "$MAC" 2>&1)
+  OUT=$(timeout 25 bluetoothctl pair "$MAC" 2>&1)
   if [ $? -ne 0 ]; then notify "pair failed: $OUT"; exit 0; fi
   bluetoothctl trust "$MAC" >/dev/null 2>&1 || true
 fi
 bluetoothctl scan off >/dev/null 2>&1 || true
-OUT=$(bluetoothctl connect "$MAC" 2>&1)
+OUT=$(timeout 25 bluetoothctl connect "$MAC" 2>&1)
 if [ $? -eq 0 ]; then notify "connected to $NAME"; else notify "connect failed: $OUT"; fi
