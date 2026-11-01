@@ -1,6 +1,20 @@
 
 
 hl.monitor({
+    output   = "HDMI-A-1",
+    mode     = "preferred",
+    position = "0x0",
+    scale    = 1,
+})
+
+hl.monitor({
+    output   = "eDP-2",
+    mode     = "1920x1080@60",
+    position = "1920x0",
+    scale    = 1,
+})
+
+hl.monitor({
     output   = "",
     mode     = "preferred",
     position = "auto",
@@ -16,7 +30,7 @@ local menu        = "fuzzel"
 
 hl.on("hyprland.start", function ()
   -- ponytail: busy-loop supervisor, use systemd user unit if backoff/health matters
-  hl.exec_cmd("pkill -x waybar 2>/dev/null; pkill -x hyprpaper 2>/dev/null; dbus-update-activation-environment --systemd --all & (while true; do hyprpaper; sleep 1; done) & (while true; do waybar; sleep 1; done) & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
+  hl.exec_cmd("pkill -x waybar 2>/dev/null; pkill -x hyprpaper 2>/dev/null; dbus-update-activation-environment --systemd --all & gnome-keyring-daemon --start --components=secrets,pkcs11 & (while true; do hyprpaper; sleep 1; done) & (while true; do waybar; sleep 1; done) & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
 end)
 
 
@@ -40,6 +54,13 @@ hl.config({
     },
 })
 
+
+hl.config({
+    render = {
+        cm_auto_hdr       = 0,
+        send_content_type = false,
+    },
+})
 
 hl.config({
     misc = {
