@@ -153,6 +153,12 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name  = "terminal-noblur",
+    match = { class = "^Alacritty$" },
+    no_blur = true,
+})
+
+hl.window_rule({
     name   = "btop-float",
     match  = { title = "^btop$" },
     float  = true,
