@@ -21,7 +21,9 @@ if ! command -v yay >/dev/null 2>&1; then
   info_panel "  yay not installed (AUR helper needed)"
 fi
 
-UPD=$(yay -Qu 2>/dev/null | wc -l)
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/waybar/update-count"
+UPD=$(cat "$CACHE" 2>/dev/null || true)
+[ -n "${UPD:-}" ] || UPD=$(yay -Qu 2>/dev/null | wc -l)
 [ -n "${UPD:-}" ] || UPD=0
 
 if [ "$UPD" -eq 0 ]; then

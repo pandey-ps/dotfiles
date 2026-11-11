@@ -40,7 +40,7 @@ if [ -n "${ORPH:-}" ]; then
   echo
 fi
 
-pkill -SIGRTMIN+9 -x waybar 2>/dev/null || true
+kill -RTMIN+9 $(pgrep -x waybar) 2>/dev/null || true
 
 if [ "$rc" -eq 0 ]; then
   notify "system updated"

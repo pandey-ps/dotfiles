@@ -3,32 +3,33 @@
 	"position": "top",
 	"height": 32,
 	"spacing": 0,
-
 	"tooltip": false,
-
 	"margin-top": 0,
 	"margin-left": 12,
 	"margin-right": 12,
-
 	"modules-left": [
 		"custom/spacing",
-		"custom/workspaces", "ext/workspaces"
+		"custom/workspaces",
+		"ext/workspaces"
 	],
-
 	"modules-right": [
-		"custom/time","custom/clock",
-		"custom/btop",
-		"custom/volume", "wireplumber",
-		"custom/battery", "battery",
-		"custom/display",
-		"custom/wifi", "network",
-		"custom/bluetooth", "bluetooth",
 		"custom/update",
+		"image",
+		"custom/time",
+		"custom/clock",
+		"custom/volume",
+		"wireplumber",
+		"custom/battery",
+		"battery",
+		"custom/display",
+		"custom/wifi",
+		"network",
+		"custom/bluetooth",
+		"bluetooth",
 		"custom/system",
 		"custom/spacing",
 		"tray"
 	],
-
 	"ext/workspaces": {
 		"format": "{icon}",
 		"on-click": "activate",
@@ -83,16 +84,6 @@
 		"format": "display",
 		"on-click": "~/.config/waybar/scripts/display-menu.sh"
 	},
-	"custom/btop": {
-		"tooltip": false,
-		"format": "btop",
-		"on-click": "alacritty msg create-window -o 'window.padding={x=0,y=0}' --title btop -e btop || alacritty --title btop -e btop"
-	},
-	"custom/system": {
-		"tooltip": false,
-		"format": "system",
-		"on-click": "~/.config/waybar/scripts/system-menu.sh"
-	},
 	"custom/update": {
 		"tooltip": false,
 		"format": "{}",
@@ -145,5 +136,16 @@
 	"tray": {
 		"icon-size": 16,
 		"spacing": 8
+	},
+	"custom/system": {
+		"tooltip": false,
+		"format": "system",
+		"on-click": "~/.config/waybar/scripts/system-menu.sh"
+	},
+	"image": {
+		"path": "/home/pandeyps/.config/waybar/icons/memory.png",
+		"size": 16,
+		"tooltip": false,
+		"on-click": "alacritty msg create-window -o 'window.padding={x=0,y=0}' --title btop -e btop || alacritty --title btop -e btop"
 	}
 }
