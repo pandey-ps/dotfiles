@@ -23,6 +23,7 @@
 		"custom/display",
 		"custom/wifi", "network",
 		"custom/bluetooth", "bluetooth",
+		"custom/update",
 		"custom/system",
 		"custom/spacing",
 		"tray"
@@ -91,6 +92,14 @@
 		"tooltip": false,
 		"format": "system",
 		"on-click": "~/.config/waybar/scripts/system-menu.sh"
+	},
+	"custom/update": {
+		"tooltip": false,
+		"format": "{}",
+		"exec": "~/.config/waybar/scripts/update-check.sh",
+		"interval": 3600,
+		"signal": 9,
+		"on-click": "~/.config/waybar/scripts/update-menu.sh"
 	},
 	"custom/time": {
 		"tooltip": false,

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=update
+Comment=update system packages (arch + aur)
+Keywords=update;upgrade;system;packages;aur;
+Exec=sh -c 'exec "$HOME/.config/waybar/scripts/update-menu.sh"'
+Terminal=false
+Categories=System;
+StartupNotify=false
