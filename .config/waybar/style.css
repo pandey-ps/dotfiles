@@ -95,6 +95,22 @@ button:hover {
 	padding-left: 10px;
 }
 
+/* tray menus (Tailscale, etc.) — opaque, `*` above makes them transparent */
+menu {
+	background-color: #241f1f;
+	border: 2px solid rgba(158, 148, 137, 0.3);
+	padding: 6px;
+}
+
+menu menuitem {
+	padding: 6px 12px;
+	color: rgb(234, 229, 225);
+}
+
+menu menuitem:hover {
+	background-color: rgba(157, 157, 156, 0.25);
+}
+
 .modules-left > widget:first-child > #custom-spacing {
 	border-right: 2px solid rgba(158, 148, 137, 0.13);
 	margin-top: 2px;

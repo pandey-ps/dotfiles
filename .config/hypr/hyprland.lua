@@ -30,7 +30,7 @@ local menu        = "fuzzel"
 
 hl.on("hyprland.start", function ()
   -- ponytail: busy-loop supervisor, use systemd user unit if backoff/health matters
-  hl.exec_cmd("pkill -x waybar 2>/dev/null; pkill -x hyprpaper 2>/dev/null; dbus-update-activation-environment --systemd --all & gnome-keyring-daemon --start --components=secrets,pkcs11 & (while true; do hyprpaper; sleep 1; done) & (while true; do waybar; sleep 1; done) & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
+  hl.exec_cmd("pkill -x waybar 2>/dev/null; pkill -x hyprpaper 2>/dev/null; dbus-update-activation-environment --systemd --all & gnome-keyring-daemon --start --components=secrets,pkcs11 & (while true; do hyprpaper; sleep 1; done) & (while true; do waybar; sleep 1; done) & tailscale systray --theme dark:nobg & mako & hyprctl setcursor Simp1e-Dark 24 & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & hypridle")
 end)
 
 
