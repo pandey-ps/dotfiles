@@ -13,8 +13,7 @@
 		"ext/workspaces"
 	],
 	"modules-right": [
-		"custom/update",
-		"image",
+		"custom/system",
 		"custom/time",
 		"custom/clock",
 		"custom/volume",
@@ -26,7 +25,8 @@
 		"network",
 		"custom/bluetooth",
 		"bluetooth",
-		"custom/system",
+		"custom/update",
+		"image",
 		"custom/spacing",
 		"tray"
 	],
