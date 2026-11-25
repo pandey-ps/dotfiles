@@ -202,6 +202,8 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("~/.config/waybar/scripts/display-menu.sh"))
+hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd("~/.config/waybar/scripts/display-menu.sh"))
+hl.bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("~/.config/waybar/scripts/display-refresh.sh"))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
 hl.bind("SUPER + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert", window = "activewindow" }))

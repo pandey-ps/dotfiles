@@ -9,13 +9,10 @@
 	"margin-right": 12,
 	"modules-left": [
 		"custom/spacing",
-		"custom/workspaces",
 		"ext/workspaces"
 	],
 	"modules-right": [
 		"custom/system",
-		"custom/time",
-		"custom/clock",
 		"custom/volume",
 		"wireplumber",
 		"custom/battery",
@@ -35,30 +32,26 @@
 		"on-click": "activate",
 		"all-outputs": true,
 		"format-icons": {
-			"1": "first",
-			"2": "second",
-			"3": "third",
-			"4": "fourth",
-			"5": "fifth",
-			"6": "sixth",
-			"7": "seventh",
-			"8": "eigth",
-			"9": "ninth",
-			"10": "tenth"
+			"1": "1",
+			"2": "2",
+			"3": "3",
+			"4": "4",
+			"5": "5",
+			"6": "6",
+			"7": "7",
+			"8": "8",
+			"9": "9",
+			"10": "10"
 		}
-	},
-	"custom/workspaces": {
-		"tooltip": false,
-		"format": "workspaces"
 	},
 	"custom/volume": {
 		"tooltip": false,
-		"format": "sound",
+		"format": "aud",
 		"on-click": "~/.config/waybar/scripts/audio-menu.sh"
 	},
 	"custom/battery": {
 		"tooltip": false,
-		"format": "battery",
+		"format": "bat",
 		"on-click": "~/.config/waybar/scripts/power-menu.sh"
 	},
 	"battery": {
@@ -71,17 +64,17 @@
 	},
 	"custom/wifi": {
 		"tooltip": false,
-		"format": "wifi",
+		"format": "net",
 		"on-click": "~/.config/waybar/scripts/wifi-menu.sh"
 	},
 	"custom/bluetooth": {
 		"tooltip": false,
-		"format": "bluetooth",
+		"format": "bt",
 		"on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
 	},
 	"custom/display": {
 		"tooltip": false,
-		"format": "display",
+		"format": "dp",
 		"on-click": "~/.config/waybar/scripts/display-menu.sh"
 	},
 	"custom/update": {
@@ -91,10 +84,6 @@
 		"interval": 3600,
 		"signal": 9,
 		"on-click": "~/.config/waybar/scripts/update-menu.sh"
-	},
-	"custom/time": {
-		"tooltip": false,
-		"format": "time"
 	},
 	"custom/spacing": {
 		"tooltip": false,
@@ -117,7 +106,7 @@
 	},
 	"network": {
 		"interface": "wlp0s20f3",
-		"format-wifi": "connected",
+		"format-wifi": "on",
 		"format-ethernet": "wired",
 		"format-disconnected": "offline",
 		"tooltip": false,
@@ -129,7 +118,7 @@
 		"format-disabled": "disabled",
 		"format-off": "off",
 		"format-on": "on",
-		"format-connected": "connected",
+		"format-connected": "on",
 		"tooltip": false,
 		"on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
 	},
@@ -139,7 +128,7 @@
 	},
 	"custom/system": {
 		"tooltip": false,
-		"format": "system",
+		"format": "i!",
 		"on-click": "~/.config/waybar/scripts/system-menu.sh"
 	},
 	"image": {
@@ -147,5 +136,8 @@
 		"size": 16,
 		"tooltip": false,
 		"on-click": "alacritty msg create-window -o 'window.padding={x=0,y=0}' --title btop -e btop || alacritty --title btop -e btop"
-	}
+	},
+	"modules-center": [
+		"custom/clock"
+	]
 }
