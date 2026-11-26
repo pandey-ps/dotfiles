@@ -211,6 +211,7 @@ hl.bind("SUPER + V", hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert", wind
 hl.bind("SUPER + X", hl.dsp.send_shortcut({ mods = "CTRL", key = "X", window = "activewindow" }))
 hl.bind(mainMod .. " + CTRL + V", hl.dsp.exec_cmd("~/.config/waybar/scripts/clip-history.sh"))
 hl.bind(mainMod .. " + CTRL + SPACE", hl.dsp.exec_cmd("~/.config/waybar/scripts/wallpaper-menu.sh"))
+hl.bind(mainMod .. " + CTRL + B", hl.dsp.exec_cmd("~/.config/waybar/scripts/bar-bg-toggle.sh"))
 
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("~/.config/waybar/scripts/osd.sh bri-up"),   { repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/waybar/scripts/osd.sh bri-down"), { repeating = true })
